@@ -386,6 +386,7 @@ async function cloudSave(){
   try{
     if(typeof DB === 'undefined') return;
     const s = JSON.stringify(DB);
+    if(s.length < 100) return;
     await FS_DOC.set({data: s, updatedAt: new Date().toISOString()});
     lastCloudSaved = s;
     const elCloud = document.getElementById("statut-cloud");
@@ -408,6 +409,7 @@ async function cloudLoad(){
   }catch(e){ console.log("Cloud load err", e); }
 }
   cloudLoad();
+  setInterval(cloudSave, 5000);
 </script>
 </script>
 <script>
