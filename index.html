@@ -362,6 +362,21 @@ ask('Restaurer cette sauvegarde ? Les données actuelles seront remplacées.',()
 document.addEventListener('click',ev=>{if(!ev.target.closest('aside,.mob'))document.querySelector('aside').classList.remove('o')});
 ld();$('#kpd').innerHTML=['1','2','3','4','5','6','7','8','9','C','0','⌫'].map(k=>`<button onclick="kk('${k}')">${k}</button>`).join('');lock();
 </script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAVYUIAJREw_xLRncWfARW-yCw5FGM2x0I",
+  authDomain: "md-global-97d33.firebaseapp.com",
+  projectId: "md-global-97d33",
+  storageBucket: "md-global-97d33.firebasestorage.app",
+  messagingSenderId: "937581869477",
+  appId: "1:937581869477:web:7f9a53e48315dd021d504c"
+};
+firebase.initializeApp(firebaseConfig);
+const dbFS = firebase.firestore();
+console.log("Firebase OK", dbFS);
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
