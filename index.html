@@ -386,9 +386,9 @@ async function cloudSave(){
   try{
     if(typeof DB === 'undefined') return;
     const s = JSON.stringify(DB);
-    if(s === lastCloudSaved) return;
-    lastCloudSaved = s;
     await FS_DOC.set({data: s, updatedAt: new Date().toISOString()});
+    lastCloudSaved = s;
+document.getElementById("statut-cloud").textContent = "Cloud : ✅ Envoyé à " + new Date().toLocaleTimeString();
     alert("✅ Envoyé vers le Cloud !");
   }catch(e){ alert("❌ Erreur Cloud : " + e.message); }
 }
