@@ -399,7 +399,6 @@ async function cloudLoad(){
     const doc = await FS_DOC.get();
     if(!doc.exists) return;
     const s = doc.data().data;
-    if(!s) return;
     const cloudDB = JSON.parse(s);
     if(typeof DB === 'undefined' || JSON.stringify(DB) !== s){
       localStorage.setItem('sk_db_v1', s);
