@@ -377,10 +377,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const dbFS = firebase.firestore();
 console.log("Firebase OK", dbFS);
-  <script>
-<script>// --- SYNC CLOUD ---
+// --- SYNC CLOUD ---
 const FS_DOC = dbFS.collection("md_global").doc("main");
 let lastCloudSaved = "";
+  function envoyerVersCloud(){ cloudSave(); }
+function recupererDepuisCloud(){ cloudLoad(); }
 async function cloudSave(){
   try{
     if(typeof DB === 'undefined') return;
