@@ -389,8 +389,8 @@ async function cloudSave(){
     if(s === lastCloudSaved) return;
     lastCloudSaved = s;
     await FS_DOC.set({data: s, updatedAt: new Date().toISOString()});
-    console.log("Cloud OK");
-  }catch(e){ console.log("Cloud err", e); }
+    alert("✅ Envoyé vers le Cloud !");
+  }catch(e){ alert("❌ Erreur Cloud : " + e.message); }
 }
 async function cloudLoad(){
   try{
