@@ -398,7 +398,7 @@ async function cloudLoad(){
     const s = doc.data().data;
     if(s.length < 100) return;
     localStorage.setItem('sk_db_v1', s);
-    location.reload();
+    //location.reload();
   }catch(e){ console.log("Cloud load err", e); }
 }
 
@@ -409,15 +409,12 @@ FS_DOC.onSnapshot((doc)=>{
   if(!s || s === lastCloudSaved) return;
   if(s.length < 100) return;
   localStorage.setItem('sk_db_v1', s);
-  location.reload();
+ // location.reload();
 });
 
 let _oldSave = save;
 save = function(){ _oldSave(); cloudSave(); };
 </script>
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
 </script>
 </body></html>
