@@ -361,4 +361,10 @@ function rb(t){let d;try{d=JSON.parse(t);if(!d.set||!d.users)throw 0}catch(x){ok
 ask('Restaurer cette sauvegarde ? Les données actuelles seront remplacées.',()=>{DB=d;nz();sv0();ap();go('backup');ok('Sauvegarde restaurée ✔')})}
 document.addEventListener('click',ev=>{if(!ev.target.closest('aside,.mob'))document.querySelector('aside').classList.remove('o')});
 ld();$('#kpd').innerHTML=['1','2','3','4','5','6','7','8','9','C','0','⌫'].map(k=>`<button onclick="kk('${k}')">${k}</button>`).join('');lock();
-</script></body></html>
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+</body></html>
