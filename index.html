@@ -383,31 +383,38 @@ let lastCloudSaved = "";
   function envoyerVersCloud(){ cloudSave(); }
 function recupererDepuisCloud(){ cloudLoad(); }
 async function cloudSave(){
+  if(typeof DB === 'undefined') return;
+  const s = JSON.stringify(DB);
+  if(s.length < 100) return;
   try{
-    if(typeof DB === 'undefined') return;
-    const s = JSON.stringify(DB);
-    if(s.length < 100) return;
-    await FS_DOC.set({data: s, updatedAt: new Date().toISOString()});
+    await FS_DOC.set({data: s, updatedAt: new Date()});
     lastCloudSaved = s;
-    const elCloud = document.getElementById("statut-cloud");
-if(elCloud) elCloud.textContent = "Cloud : ✅ Envoyé à " + new Date().toLocaleTimeString();
-alert("✅ Envoyé vers le Cloud !");
-  }catch(e){ alert("❌ Erreur Cloud : " + e.message); }
+  }catch(e){ console.log("Cloud save err", e); }
 }
+
 async function cloudLoad(){
   try{
     const doc = await FS_DOC.get();
     if(!doc.exists) return;
     const s = doc.data().data;
-    const cloudDB = JSON.parse(s);
-    if(typeof DB === 'undefined' || JSON.stringify(DB) !== s){
-      localStorage.setItem('sk_db_v1', s);
-      console.log("Cloud chargé, rechargement...");
-      location.reload();
-    }
+    if(s.length < 100) return;
+    localStorage.setItem('sk_db_v1', s);
+    location.reload();
   }catch(e){ console.log("Cloud load err", e); }
 }
-  cloudLoad();
+
+// SYNCHRO TEMPS REEL - sans bouton, sans message
+FS_DOC.onSnapshot((doc)=>{
+  if(!doc.exists) return;
+  const s = doc.data().data;
+  if(!s || s === lastCloudSaved) return;
+  if(s.length < 100) return;
+  localStorage.setItem('sk_db_v1', s);
+  location.reload();
+});
+
+let _oldSave = save;
+save = function(){ _oldSave(); cloudSave(); };
 </script>
 <script>
 if ('serviceWorker' in navigator) {
