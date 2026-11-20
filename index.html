@@ -376,6 +376,37 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const dbFS = firebase.firestore();
 console.log("Firebase OK", dbFS);
+  <script>
+<script>// --- SYNC CLOUD ---
+const FS_DOC = dbFS.collection("md_global").doc("main");
+let lastCloudSaved = "";
+async function cloudSave(){
+  try{
+    if(typeof DB === 'undefined') return;
+    const s = JSON.stringify(DB);
+    if(s === lastCloudSaved) return;
+    lastCloudSaved = s;
+    await FS_DOC.set({data: s, updatedAt: new Date().toISOString()});
+    console.log("Cloud OK");
+  }catch(e){ console.log("Cloud err", e); }
+}
+async function cloudLoad(){
+  try{
+    const doc = await FS_DOC.get();
+    if(!doc.exists) return;
+    const s = doc.data().data;
+    if(!s) return;
+    const cloudDB = JSON.parse(s);
+    if(typeof DB === 'undefined' || JSON.stringify(DB) !== s){
+      localStorage.setItem('sk_db_v1', s);
+      console.log("Cloud chargé, rechargement...");
+      location.reload();
+    }
+  }catch(e){ console.log("Cloud load err", e); }
+}
+setInterval(cloudSave, 5000);
+cloudLoad();
+</script>
 </script>
 <script>
 if ('serviceWorker' in navigator) {
