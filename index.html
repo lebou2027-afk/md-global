@@ -388,8 +388,10 @@ async function cloudSave(){
     const s = JSON.stringify(DB);
     await FS_DOC.set({data: s, updatedAt: new Date().toISOString()});
     lastCloudSaved = s;
-document.getElementById("statut-cloud").textContent = "Cloud : ✅ Envoyé à " + new Date().toLocaleTimeString();
-    alert("✅ Envoyé vers le Cloud !");
+    const elCloud = document.getElementById("statut-cloud");
+if(elCloud) elCloud.textContent = "Cloud : ✅ Envoyé à " + new Date().toLocaleTimeString();
+    alert(const elCloud = document.getElementById("statut-cloud");
+if(elCloud) elCloud.textContent = "Cloud : ✅ Envoyé à " + new Date().toLocaleTimeString();✅ Envoyé vers le Cloud !");
   }catch(e){ alert("❌ Erreur Cloud : " + e.message); }
 }
 async function cloudLoad(){
